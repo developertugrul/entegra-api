@@ -1,0 +1,39 @@
+{
+  "name": "developertugrul/entegra-api",
+  "description": "Entegra API",
+  "license": "MIT",
+  "keywords": [
+    "entegra",
+    "api",
+    "ecommerce",
+    "marketplace"
+  ],
+  "authors": [
+    {
+      "name": "Tuğrul Yıldırım",
+      "email": "iletisim@tugrulyildirim.com",
+      "homepage": "https://tugrulyildirim.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Developertugrul\\EntegraApi\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Developertugrul\\EntegraApi\\EntegraApiServiceProvider"
+      ]
+    }
+  },
+  "readme": "README.md",
+  "require": {
+    "php": ">=7.0",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "version": "1.0.0",
+  "type": "library"
+}
