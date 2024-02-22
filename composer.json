@@ -32,7 +32,7 @@
   "readme": "README.md",
   "require": {
     "php": ">=7.0",
-    "guzzlehttp/guzzle": "^6.3"
+    "guzzlehttp/guzzle": "^7.2"
   },
   "version": "1.0.0",
   "type": "library"
