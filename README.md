@@ -8,6 +8,21 @@ Bu kütüphane Entegra E-ticaret Yazılımını kullanan firmaların ürünlerin
 composer require developertugrul/entegra-api
 ```
 
+Kernel.php dosyasında middleware ekleyin.
+
+```php
+protected $routeMiddleware = [
+    // ...
+    'checkEntegraToken' => \Developertugrul\EntegraApi\Middleware\CheckToken::class,
+];
+```
+
+.env dosyasına entegra kullanıcı adı ve şifresi ekleyin.
+
+```env
+ENTEGRA_API_USERNAME=apitestv2@entegrabilisim.com
+ENTEGRA_API_PASSWORD=apitestv2
+```
 
 ## Kullanım
 
@@ -16,17 +31,16 @@ use Developertugrul\EntegraApi;
 
 $entegra = new EntegraApi();
 
-$products = $entegra->getProducts();
 ```
 
 ## Metodlar
 
-### getProducts()
+### Ürün listesi çekme
 
 Entegra'dan ürünleri çeker.
 
 ```php
-$products = $entegra->getProducts();
+$products = $entegra->products()->get();
 ```
 
 ### getCategories()

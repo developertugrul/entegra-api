@@ -2,10 +2,20 @@
 
 namespace Developertugrul\EntegraApi;
 
-class EntegraApiServiceProvider
+use Illuminate\Support\ServiceProvider;
+use Developertugrul\EntegraApi\EntegraApi;
+
+class EntegraApiServiceProvider extends ServiceProvider
 {
-    public function test()
+    public function register()
     {
-        return 'test';
+        $this->app->singleton(EntegraApi::class, function ($app) {
+            return new EntegraApi();
+        });
+    }
+
+    public function boot()
+    {
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 }
