@@ -32,7 +32,8 @@
   "readme": "README.md",
   "require": {
     "php": ">=7.0",
-    "guzzlehttp/guzzle": "^6.3"
+    "guzzlehttp/guzzle": "^6.3",
+    "developertugrul/entegra-api": "1.0.0"
   },
   "version": "1.0.0",
   "type": "library"
