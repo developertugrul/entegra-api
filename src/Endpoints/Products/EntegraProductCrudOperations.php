@@ -104,7 +104,86 @@ class EntegraProductCrudOperations
      * @throws GuzzleException
      * @throws Exception
      */
-    public function updateProductVariations(array $productData): array
+    public function addProductVariations(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->post( '/product/variations/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Update a product variations. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#59bd372a-3d70-43c7-b403-b93d83030775
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateProduct(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->put( '/product/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+
+    /**
+     * Delete a product from the Entegra API using the provided data. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#8f744c3e-bc57-4a3d-98fb-84dd38f72d63
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateProductV2(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->put( '/product/update/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Delete a product from the Entegra API using the provided data. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#8f744c3e-bc57-4a3d-98fb-84dd38f72d63
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateVariation(array $productData): array
     {
         if ($this->token === null || $this->token->access === null) {
             throw new Exception('Token is not valid');
@@ -122,4 +201,109 @@ class EntegraProductCrudOperations
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * Delete a product from the Entegra API using the provided data. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#8f744c3e-bc57-4a3d-98fb-84dd38f72d63
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateProductQuantity(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->put( '/product/quantity/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Delete a product from the Entegra API using the provided data. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#8f744c3e-bc57-4a3d-98fb-84dd38f72d63
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateProductPrice(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->put( '/product/prices/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Delete a product from the Entegra API using the provided data. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#8f744c3e-bc57-4a3d-98fb-84dd38f72d63
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateProductPriceByVariationId(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->put( '/product/variation/prices/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Delete a product from the Entegra API using the provided data. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#8f744c3e-bc57-4a3d-98fb-84dd38f72d63
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateProductQuantityByVariationId(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->put( '/product/variation/quantity/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
 }
