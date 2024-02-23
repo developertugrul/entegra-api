@@ -38,7 +38,7 @@ class EntegraListProducts
                 ]
             ]);
         } else {
-            $response = $this->client->get('/product/page=1/' . $id . '/', [
+            $response = $this->client->get('/product/page=1/?id=' . $id . '/', [
                 'headers' => [
                     "Authorization" => "JWT " . $this->token->access
                 ]
