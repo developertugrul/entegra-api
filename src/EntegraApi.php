@@ -6,17 +6,20 @@ use GuzzleHttp\Client;
 use Developertugrul\EntegraApi\Token;
 use Illuminate\Support\Facades\Schema;
 use Developertugrul\EntegraApi\Endpoints\Products\EntegraListProducts;
+use Developertugrul\EntegraApi\Endpoints\Categories\EntegraListCategories;
 
 class EntegraApi
 {
     private $client;
     private $products;
+    private $categories;
 
     public function __construct()
     {
         $this->checkMigration();
         $this->client = new Client(['base_uri' => 'https://apiv2.entegrabilisim.com']);
         $this->products = new EntegraListProducts($this->client);
+        $this->categories = new EntegraListCategories($this->client);
         $this->obtainToken();
     }
 
@@ -27,13 +30,19 @@ class EntegraApi
         }
     }
 
-    private function obtainToken()
+    public function obtainToken()
     {
         $token = Token::find(1);
 
-        if (!$token || $token->isExpired()) {
-            $response = $this->client->post('/api/user/token/obtain/', [
-                'auth' => [getenv('ENTEGRA_API_USERNAME'), getenv('ENTEGRA_API_PASSWORD')]
+        if (is_null($token) || $token->isExpired()) {
+            $response = $this->client->request('POST', '/api/user/token/obtain/', [
+                'json' => [
+                    'email' => getenv('ENTEGRA_API_USERNAME'),
+                    'password' => getenv('ENTEGRA_API_PASSWORD')
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/json'
+                ]
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);
@@ -46,12 +55,13 @@ class EntegraApi
         }
     }
 
-    private function storeToken($token, $expiresAt, $refresh)
+    private function storeToken($accessToken, $expiresAt, $refresh)
     {
-        Token::updateOrCreate(
-            ['id' => 1],
-            ['token' => $token, 'expires_at' => $expiresAt, 'refresh' => $refresh]
-        );
+        $token = Token::firstOrCreate(['id' => 1]);
+        $token->access = $accessToken;
+        $token->expire_at = $expiresAt;
+        $token->refresh = $refresh;
+        $token->save();
     }
 
     public function refreshToken()
@@ -59,17 +69,19 @@ class EntegraApi
         $token = Token::find(1);
 
         if ($token) {
-            $response = $this->client->post('/api/user/token/refresh/', [
-                'auth' => [getenv('ENTEGRA_API_USERNAME'), getenv('ENTEGRA_API_PASSWORD')],
-                'form_params' => [
+            $response = $this->client->request('POST', '/api/user/token/refresh/', [
+                'json' => [
                     'refresh' => $token->refresh
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/json'
                 ]
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);
 
             if (isset($data['access'], $data['expire_at'])) {
-                $this->storeToken($data['access'], $data['expire_at'], $data['refresh']);
+                $this->storeToken($data['access'], $data['expire_at'], $token->refresh);
             } else {
                 throw new \Exception('Token data is not valid');
             }
@@ -81,5 +93,10 @@ class EntegraApi
     public function products()
     {
         return $this->products;
+    }
+
+    public function categories()
+    {
+        return $this->categories;
     }
 }

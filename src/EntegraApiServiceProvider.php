@@ -13,9 +13,14 @@ class EntegraApiServiceProvider extends ServiceProvider
             return new EntegraApi();
         });
     }
-
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/database/migrations' => database_path('migrations'),
+            ], 'migrations');
+        }
+
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 }

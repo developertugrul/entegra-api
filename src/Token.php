@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Token extends Model
 {
-    protected $fillable = ['token', 'expires_at', 'refresh'];
+    protected $fillable = ['access', 'expire_at', 'refresh'];
 
     public function isExpired()
     {

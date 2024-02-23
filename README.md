@@ -24,6 +24,13 @@ ENTEGRA_API_USERNAME=apitestv2@entegrabilisim.com
 ENTEGRA_API_PASSWORD=apitestv2
 ```
 
+Run migrations
+
+```bash
+php artisan vendor:publish --provider="Developertugrul\EntegraApi\EntegraApiServiceProvider" --tag="migrations"
+php artisan migrate
+```
+
 ## Kullanım
 
 ```php
@@ -41,6 +48,13 @@ Entegra'dan ürünleri çeker.
 
 ```php
 $products = $entegra->products()->get();
+
+// ID ile ürün çekme
+$product = $entegra->products()->get(1);
+
+// api_sync parametresi ile sadece api_sync=1 olan ürünleri çekme
+$products = $entegra->products()->getWithParameter(1);
+
 ```
 
 ### getCategories()
