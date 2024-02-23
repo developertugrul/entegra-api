@@ -44,4 +44,82 @@ class EntegraProductCrudOperations
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * Add a product to the Entegra API using version 2. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#6fda9501-dba6-4d56-8347-dc619f65b40d
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function addProductv2(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->post( '/product/v2/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Add a product pictures. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#267431fd-6aff-4834-adbd-9d3e7a77b368
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function addProductPictures(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->post( '/product/pictures/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Update a product variations. The data array should be like https://documenter.getpostman.com/view/23999845/2s84LKWZug#59bd372a-3d70-43c7-b403-b93d83030775
+     * @param array $productData
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateProductVariations(array $productData): array
+    {
+        if ($this->token === null || $this->token->access === null) {
+            throw new Exception('Token is not valid');
+        }
+
+        $response = $this->client->put( '/product/variations/', [
+            'headers' => [
+                'Authorization' => 'JWT ' . $this->token->access,
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                "list" => $productData
+            ])
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
