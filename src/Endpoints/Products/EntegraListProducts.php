@@ -83,4 +83,42 @@ class EntegraListProducts
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * Get all products from the Entegra API with pagination support.
+     * @return array
+     * @throws Exception|GuzzleException
+     */
+    public function getAll(): array
+    {
+        $page = 1;
+        $allProducts = [];
+
+        while (true) {
+            if ($this->token === null || $this->token->access === null) {
+                throw new Exception('Token is not valid');
+            }
+
+            $response = $this->client->get('/product/page=' . $page . '/', [
+                'headers' => [
+                    'Authorization' => 'JWT ' . $this->token->access
+                ]
+            ]);
+
+            $products = json_decode($response->getBody()->getContents(), true);
+
+            // If the response is empty, break the loop
+            if (empty($products)) {
+                break;
+            }
+
+            // Merge the products into the allProducts array
+            $allProducts = array_merge($allProducts, $products);
+
+            // Increment the page number
+            $page++;
+        }
+
+        return $allProducts;
+    }
 }
