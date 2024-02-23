@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'developertugrul/entegra-api',
-        'pretty_version' => '1.0.3',
-        'version' => '1.0.3.0',
+        'pretty_version' => '1.0.6',
+        'version' => '1.0.6.0',
         'reference' => NULL,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
@@ -11,8 +11,8 @@
     ),
     'versions' => array(
         'developertugrul/entegra-api' => array(
-            'pretty_version' => '1.0.3',
-            'version' => '1.0.3.0',
+            'pretty_version' => '1.0.6',
+            'version' => '1.0.6.0',
             'reference' => NULL,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
